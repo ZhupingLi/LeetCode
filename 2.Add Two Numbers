@@ -1,0 +1,153 @@
+Given an array of integers, return indices of the two numbers such that they add up to a specific target.
+
+You may assume that each input would have exactly one solution, and you may not use the same element twice.
+
+Example:
+Given nums = [2, 7, 11, 15], target = 9,
+
+Because nums[0] + nums[1] = 2 + 7 = 9,
+return [0, 1].
+
+
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+	    ListNode* temp;
+	    temp=(ListNode*)malloc(sizeof(ListNode));
+	    temp->val=0;
+	    temp->next=NULL;
+	    ListNode* re;
+	    re=l1;
+		while(l1->next != NULL && l2->next != NULL)
+		{
+			l1->val = l1->val + l2->val;
+			if (l1->val >= 10)
+			{
+			    l1->val = l1->val - 10;
+			    l1->next->val ++;
+			}
+			l1 = l1->next;
+			l2 = l2->next;
+		}
+	    if (l1->next == NULL && l2->next != NULL)
+	    {
+	        l1->val = l1->val + l2->val;
+	        if(l1->val >= 10)
+	        {
+	            l1->val = l1->val - 10;
+	            l1->next = l2->next;
+	            l2 = l2->next;
+	            l2->val = l2->val + 1;
+	            if(l2->val < 10)
+	            {
+	                return re;
+	            }
+	            else
+	            {
+	                while(l2->next!=NULL)
+	                {
+	                    if (l2->val >= 10)
+	                    {
+	                        l2->val = l2->val - 10;
+	                        l2->next->val ++;
+	                        l2 = l2->next;
+	                    }
+	                    else
+	                    {
+	                        l2 = l2->next;
+	                    }
+	                }
+	                if(l2->val >= 10)
+	                {
+	                    temp->val = 1;
+	                    l2->val = l2->val - 10;
+	                    l2->next = temp;
+	                    return re;
+	                }
+	                else
+	                {
+	                    return re;
+	                }
+	            }
+	            
+	        }
+	        else
+	        {
+	            l1->next = l2->next;
+	            return re;
+	        }
+	    }
+	    else if(l1->next != NULL && l2->next == NULL)
+	    {
+	        l1->val = l1->val + l2->val;
+	        if(l1->val >= 10)
+	        {
+	            l1->val = l1->val - 10;
+	            l1 = l1->next;
+	            l1->val = l1->val + 1;
+	            if(l1->val < 10)
+	            {
+	                return re;
+	            }
+	            else
+	            {
+	                while(l1->next!=NULL)
+	                {
+	                    if (l1->val >= 10)
+	                    {
+	                        l1->val = l1->val - 10;
+	                        l1->next->val ++;
+	                        l1 = l1->next;
+	                    }
+	                    else
+	                    {
+	                        l1 = l1->next;
+	                    }
+	                }
+	                if(l1->val >= 10)
+	                {
+	                    temp->val = 1;
+	                    l1->val = l1->val - 10;
+	                    l1->next = temp;
+	                    return re;
+	                }
+	                else
+	                {
+	                    return re;
+	                }
+	            }
+	            
+	        }
+	        else
+	        {
+	            return re;
+	        }
+	    }
+	    else if(l1->next == NULL && l2->next == NULL)
+	    {
+	        l1->val = l1->val + l2->val;
+	        if(l1->val >=10)
+	        {
+	            temp->val = 1;
+	            l1->val = l1->val - 10;
+	            l1->next = temp;
+	            return re;
+	        }
+	        else
+	        {
+	            return re;
+	        }
+	    }
+	    return re;
+	}
+	
+};
